@@ -5,6 +5,7 @@
   let currentPosition=userStart;
   const boardwidth=560;
   const ballStart=[230,40];
+  let ballCurrentPosition=ballStart;
   
   
   
@@ -67,6 +68,11 @@ function displaceUser(){
     user.style.left=currentPosition[0] +"px";
  user.style.bottom=currentPosition[1] + "px";
 }
+function drawBall(){
+  ball.style.left=ballCurrentPosition[0] +"px";
+ ball.style.bottom=ballCurrentPosition[1] +"px";
+
+}
 
  //movement of the user while playing the game
 
@@ -95,5 +101,13 @@ function displaceUser(){
  document.addEventListener("keydown",moveUser);
 
  const ball=document.createElement("div");
- grid.appendChild(ball);
+ 
  ball.classList.add("ball");
+ drawBall();
+ grid.appendChild(ball);
+ 
+ function displaceBall(){
+   ballCurrentPosition[0]+=2;
+   ballCurrentPosition[1]+=2;
+   drawBall();
+ }
