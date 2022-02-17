@@ -3,9 +3,16 @@
   const height=20; 
   const userStart=[230,10];
   let currentPosition=userStart;
-  const boardwidth=560;
+  const boardWidth=560;
   const ballStart=[230,40];
   let ballCurrentPosition=ballStart;
+  let timerId;
+  const ballDiameter=20;
+  const boardHeight=300;
+  let directionX=-2;
+  let directionY=2;
+  const showScore=document.querySelector("#score");
+  let score=0;
   
   
   
@@ -105,9 +112,84 @@ function drawBall(){
  ball.classList.add("ball");
  drawBall();
  grid.appendChild(ball);
- 
+
  function displaceBall(){
-   ballCurrentPosition[0]+=2;
-   ballCurrentPosition[1]+=2;
+   ballCurrentPosition[0]+=directionX;
+   ballCurrentPosition[1]+=directionY;
    drawBall();
+   checkForCollisions();
+
  }
+   timerId=setInterval(displaceBall,30);
+
+
+
+   function checkForCollisions(){
+     // check if the ball hits a brick
+     for(let i=0; i<blocks.length; i++){
+       if(
+         (ballCurrentPosition[0]>blocks[i].bottomLeft[0]&&ballCurrentPosition[0]<blocks[i].bottomRight[0]
+          &&((ballCurrentPosition[1]+ballDiameter)>blocks[i].bottomLeft[1]&&ballCurrentPosition[1]<
+          blocks[i].topLeft[1]))){
+            const allTheBlocks=Array.from(document.querySelectorAll(".block"));
+            
+            allTheBlocks[i].classList.remove("block");
+            blocks.splice(i,1);
+            changeBallPosition();
+            score++;
+            showScore.innerHTML=score;
+
+
+
+
+          }
+       }
+
+     // checking for user collisions
+     if((ballCurrentPosition[0]>currentPosition[0] && ballCurrentPosition[0]< currentPosition[0]+width )
+     &&(ballCurrentPosition[1]>currentPosition[1]&& ballCurrentPosition[1]<currentPosition[1]+height)){
+       changeBallPosition();
+     }
+     //checking for collisions with the wall
+
+     if(ballCurrentPosition[0]>=(boardWidth-ballDiameter) ||
+     ballCurrentPosition[1]>=(boardHeight-ballDiameter) ||
+     ballCurrentPosition[0]<= 0 )
+     {
+       changeBallPosition();
+     }
+
+    
+     // check for game over
+     if(ballCurrentPosition[1]<=0){
+       clearInterval(timerId);
+       showScore.innerHTML="you lose";
+       document.removeEventListener("keydown",moveUser);
+     }
+    }
+
+   
+  
+
+   //check the direction of collision if it goes off the board
+   function changeBallPosition(){
+     if(directionX === 2 &&directionY === 2){
+       directionY=-2;
+       return;
+     }
+     if(directionX === 2 &&directionY === -2){
+      directionX=-2;
+      return;
+
+   }
+   if(directionX === -2 &&directionY === -2){
+    directionY=2;
+    return;
+
+
+  }
+  if(directionX === -2 &&directionY === 2){
+    directionX=2;
+    return;
+  }
+}
