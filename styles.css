@@ -1,9 +1,41 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+    background-color: black;
+
+}
+
+
+body{
+    background-color:grey;
+    text-align: center;
+}
+h1{
+    text-align: center;
+}
+#score{
+    font-size: 4rem;
+    width:20%;
+    height:10%;
+margin-left:auto;
+margin-right:auto;
+}
+
 .grid{
+    margin-left:auto;
+    background-color: black;
+    margin-right:auto;
     position: absolute;
     width:600px;
     height:300px;
     border: solid black 1px;
-    margin-top: 80px;
+    margin-top: 20px;
+    left:35%;
 }
 .block{
     position:absolute;
@@ -30,3 +62,33 @@
 
 
 }
+.nav{
+    background-color: darkred;
+    color:white;
+}
+input{
+ 
+ 
+    background-color: black;
+    
+  }
+  .startButton{
+      background-color: black;
+      color:white;
+      width:15rem;
+  }
+  .startButton:hover{
+   
+    background-color:pink;
+}
+
+.containerforscore{
+    display:flex;
+}
+.scorediv{
+    width:15%;
+    margin-right: 3px;
+    width:10rem;
+    background-color: brown;
+}
+
